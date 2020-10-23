@@ -11,6 +11,7 @@ terraform {
 provider "libvirt" {
   alias = "vmhost01"
   uri   = "qemu+ssh://jenkins_automation@vmhost01/system?keyfile=../id_ed25519_jenkins"
+  // uri   = "qemu+ssh://vmhost01/system"
 }
 
 variable "env" {
@@ -19,7 +20,7 @@ variable "env" {
 
 resource "libvirt_volume" "nginx" {
   provider         = libvirt.vmhost01
-  name             = "nginx-${var.env}.qcow2"
+  name             = "nginx_${var.env}.qcow2"
   pool             = var.env
   base_volume_name = "nginx_base.qcow2"
   format           = "qcow2"
@@ -28,7 +29,7 @@ resource "libvirt_volume" "nginx" {
 
 resource "libvirt_domain" "nginx" {
   provider  = libvirt.vmhost01
-  name      = "nginx-${var.env}"
+  name      = "nginx_${var.env}"
   memory    = "512"
   vcpu      = 1
   autostart = true
@@ -37,7 +38,7 @@ resource "libvirt_domain" "nginx" {
   network_interface {
     macvtap  = "enp0s25"
     mac      = "52:54:00:EA:17:56"
-    hostname = "nginx-${var.env}"
+    hostname = "nginx_${var.env}"
   }
 
   network_interface {
