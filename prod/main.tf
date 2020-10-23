@@ -30,14 +30,14 @@ resource "libvirt_volume" "nginx" {
 resource "libvirt_domain" "nginx" {
   provider  = libvirt.vmhost01
   name      = "nginx_${var.env}"
-  memory    = "256"
-  vcpu      = 1
+  memory    = "512"
+  vcpu      = 2
   autostart = true
 
   // The MAC here is given an IP through mikrotik
   network_interface {
     macvtap  = "enp0s25"
-    mac      = "52:54:00:EA:17:56"
+    mac      = "52:54:00:EA:18:56"
     hostname = "nginx_${var.env}"
   }
 
