@@ -30,7 +30,7 @@ resource "libvirt_volume" "nginx" {
 resource "libvirt_domain" "nginx" {
   provider  = libvirt.vmhost01
   name      = "nginx_${var.env}"
-  memory    = "256"
+  memory    = "448"
   vcpu      = 2
   autostart = true
 
